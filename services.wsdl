@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <definitions
+        xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+
+        targetNamespace="urn:laboratoireGSB"
+        xmlns:tns="urn:laboratoireGSB">
+
+        <types>
+            <xsd:schema targetNamespace="urn:laboratoireGSB">
+                <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+                <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+
+                <xsd:complexType name="Visite">
+		            <xsd:all>
+                        <xsd:element name="idVisite" type="xsd:int"/>
+                        <xsd:element name="date" type="xsd:date"/>
+                        <xsd:element name="dateFin" type="xsd:date"/>
+                        <xsd:element name="motif" type="xsd:string"/>
+                        <xsd:element name="bilan" type="xsd:string"/>
+                        <xsd:element name="idVisiteurMedical" type="xsd:int"/>
+                        <xsd:element name="idPraticien" type="xsd:int"/>
+		            </xsd:all>
+                </xsd:complexType>
+
+                <xsd:complexType name="listeVisite">
+		            <xsd:complexContent>
+			            <xsd:restriction base="SOAP-ENC:Array">
+			                <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Visite[]"/>
+		                </xsd:restriction>
+		            </xsd:complexContent>
+                </xsd:complexType>
+
+                <xsd:complexType name="Delegue">
+		            <xsd:all>
+                        <xsd:element name="idDelegue" type="xsd:int"/>
+                        <xsd:element name="nom" type="xsd:string"/>
+                        <xsd:element name="prenom" type="xsd:string"/>
+                        <xsd:element name="adresse" type="xsd:string"/>
+                        <xsd:element name="ville" type="xsd:string"/>
+                        <xsd:element name="codePostal" type="xsd:int"/>
+                        <xsd:element name="email" type="xsd:string"/>
+                        <xsd:element name="salaire" type="xsd:decimal"/>
+		            </xsd:all>
+                </xsd:complexType>
+
+            </xsd:schema>
+        </types>
+
+
+        <message name="getVisiteByIdRequest">
+            <part name="id" type="xsd:int" />
+        </message>
+        <message name="getVisiteByIdResponse">
+            <part name="return" type="tns:Visite" />
+        </message>
+
+        <message name="getVisitesByVisiteurRequest">
+            <part name="idVisiteur" type="xsd:int" />
+        </message>
+        <message name="getVisitesByVisiteurResponse">
+            <part name="return" type="tns:listeVisite" />
+        </message>
+
+        <message name="getHashPasswordRequest">
+            <part name="password" type="xsd:string" />
+        </message>
+        <message name="getHashPasswordResponse">
+            <part name="return" type="xsd:string" />
+        </message>
+
+        <message name="getDelegueByIdRequest">
+            <part name="password" type="xsd:int" />
+        </message>
+        <message name="getDelegueByIdResponse">
+            <part name="return" type="tns:Delegue" />
+        </message>
+
+
+        <portType name="laboratoireGSB-portType">
+
+            <operation name="getVisiteById">
+                <wsdl:input message="tns:getVisiteByIdRequest"/>
+                <wsdl:output message="tns:getVisiteByIdResponse"/>
+            </operation>
+
+            <operation name="getVisitesByVisiteur">
+                <wsdl:input message="tns:getVisitesByVisiteurRequest"/>
+                <wsdl:output message="tns:getVisitesByVisiteurResponse"/>
+            </operation>
+
+            <operation name="getHashPassword">
+                <wsdl:input message="tns:getHashPasswordRequest"/>
+                <wsdl:output message="tns:getHashPasswordResponse"/>
+            </operation>
+
+            <operation name="getDelegueById">
+                <wsdl:input message="tns:getDelegueByIdRequest"/>
+                <wsdl:output message="tns:getDelegueByIdResponse"/>
+            </operation>
+        </portType>
+
+
+        <binding name="laboratoireGSB-binding" type="tns:laboratoireGSB-portType">
+
+            <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+            <operation name="getVisiteById">
+                <soap:operation soapAction="urn:laboratoireGSB#getVisiteByIdServeur" style="rpc" />
+                <input><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+                <output><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+            </operation>
+
+            <operation name="getVisitesByVisiteur">
+                <soap:operation soapAction="urn:laboratoireGSB#getVisitesByVisiteur" style="rpc" />
+                <input><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+                <output><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+            </operation>
+
+            <operation name="getHashPassword">
+                <soap:operation soapAction="urn:laboratoireGSB#getHashPassword" style="rpc" />
+                <input><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+                <output><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+            </operation>
+
+            <operation name="getDelegueById">
+                <soap:operation soapAction="urn:laboratoireGSB#getDelegueById" style="rpc" />
+                <input><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+                <output><soap:body use="encoded" namespace="urn:laboratoireGSB" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+            </operation>
+        </binding>
+
+        <service name="laboratoireGSB-service">
+            <port name="laboratoireGSB-port" binding="laboratoireGSB-binding">
+                <soap:address location="http://127.0.0.1:8080/webservice/" />
+            </port>
+        </service>
+    </definitions>

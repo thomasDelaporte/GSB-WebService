@@ -1,0 +1,21 @@
+{
+    "name": "thomas/webservice",
+    "description": "Web service laboratoireGSB",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Thomas DELAPORTE",
+            "email": "thomas.delaporte30@gmail.com"
+        }
+    ],
+
+    "scripts": {
+        "test:soapclient": "phpunit tests/ClientSOAP.php"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"        
+        }
+    }
+}
